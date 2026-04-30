@@ -1,0 +1,49 @@
+app:
+  name: "Factory-to-Customer Shipping Route Efficiency Analysis"
+  default_data_path: "data/Nassau Candy Distributor.csv"
+
+schema:
+  order_date: "Order Date"
+  ship_date: "Ship Date"
+  factory: "Division"
+  state: "State/Province"
+  region: "Region"
+  ship_mode: "Ship Mode"
+  sales: "Sales"
+  units: "Units"
+
+processing:
+  drop_invalid_ship_before_order: true
+  missing:
+    strategy: "drop_critical"  # options: drop_critical, fill
+    critical_columns:
+      - "Order Date"
+      - "Ship Date"
+      - "Factory"
+      - "Ship Mode"
+
+features:
+  lead_time_unit: "days"
+  delay_threshold_days_default: 7
+  route_separator: " → "
+  route_destination_preference: "StateThenRegion" # StateThenRegion | RegionThenState | StateOnly | RegionOnly
+
+analysis:
+  min_route_volume: 5
+  leaderboard_size: 10
+
+ml:
+  enabled: true
+  random_state: 42
+  test_size: 0.2
+  model_type: "RandomForestClassifier"
+  random_forest:
+    n_estimators: 300
+    max_depth: null
+    min_samples_leaf: 2
+    n_jobs: -1
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+
