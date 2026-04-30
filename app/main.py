@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import hashlib
 import logging
 from datetime import datetime
@@ -10,7 +14,7 @@ import pandas as pd
 import streamlit as st
 import yaml
 
-from app.components.filters import apply_filters, render_filters
+from components.filters import apply_filters, render_filters
 from app.components.layout import kpi_row, set_page_config
 from src.analysis import (
     compute_kpis,
@@ -418,4 +422,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
